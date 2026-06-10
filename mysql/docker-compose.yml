@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:9.6.0
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: king
+      # MYSQL_DATABASE: spring
+      MYSQL_USER: king
+      MYSQL_PASSWORD: king123
+    ports:
+      - "3306:3306"
+    volumes:
+      - /Users/dreamerking/king-mysql:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql-data:
+    name: mysql-data
